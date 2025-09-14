@@ -6,7 +6,7 @@ Este repositório contém os principais diagramas de modelagem do sistema **Mast
 
 O diagrama de caso de uso apresenta as **interações do usuário com o sistema**, mostrando as funcionalidades principais que o usuário pode realizar, como gerenciar ingredientes, buscar receitas e receber sugestões inteligentes.
 
-![Diagrama de Caso de Uso](https://github.com/user-attachments/assets/ebd226a5-2b91-43e4-86f7-8437f921590d)
+![Diagrama de Caso de Uso](https://github.com/user-attachments/assets/2c6b4d28-d7f9-4f47-8346-dcd28afc1fe4)
 
 **Principais atores:**
 - Usuário
