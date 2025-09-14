@@ -1,0 +1,55 @@
+name: Auto PR Workflow
+
+on:
+  push:
+    branches:
+      - 'feature/**'
+      - dev
+      - hom
+  workflow_dispatch:
+
+jobs:
+  create-pull-request:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # necessário para histórico completo
+
+      - name: Set GitHub token
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: echo "Token available"
+
+      - name: Determine target branch
+        id: target
+        run: |
+          CURRENT_BRANCH=$(echo $GITHUB_REF | sed 's|refs/heads/||')
+          echo "CURRENT_BRANCH=$CURRENT_BRANCH" >> $GITHUB_ENV
+
+          if [[ "$CURRENT_BRANCH" == feature/* ]]; then
+            TARGET_BRANCH="dev"
+          elif [[ "$CURRENT_BRANCH" == "dev" ]]; then
+            TARGET_BRANCH="hom"
+          elif [[ "$CURRENT_BRANCH" == "hom" ]]; then
+            TARGET_BRANCH="main"
+          else
+            TARGET_BRANCH=""
+          fi
+
+          echo "TARGET_BRANCH=$TARGET_BRANCH" >> $GITHUB_ENV
+          echo "Current branch: $CURRENT_BRANCH"
+          echo "Target branch: $TARGET_BRANCH"
+
+      - name: Create Pull Request
+        if: env.TARGET_BRANCH != ''
+        uses: peter-evans/create-pull-request@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: "Prepare PR from ${{ env.CURRENT_BRANCH }} to ${{ env.TARGET_BRANCH }}"
+          branch: ${{ env.CURRENT_BRANCH }}
+          base: ${{ env.TARGET_BRANCH }}
+          title: "Pull Request: ${{ env.CURRENT_BRANCH }} → ${{ env.TARGET_BRANCH }}"
+          body: "Este PR foi gerado automaticamente pelo workflow. Revise e faça o merge manualmente."
+          draft: false
