@@ -1,4 +1,4 @@
-name: Auto PR Workflow
+name: Auto Pull Request Workflow
 
 on:
   push:
@@ -12,16 +12,14 @@ jobs:
   create-pull-request:
     runs-on: ubuntu-latest
     steps:
+      # 1️⃣ Checkout do repositório com PAT
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
+          token: ${{ secrets.PAT_TOKEN }}
           fetch-depth: 0  # necessário para histórico completo
 
-      - name: Set GitHub token
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: echo "Token available"
-
+      # 2️⃣ Determinar branch alvo para o PR
       - name: Determine target branch
         id: target
         run: |
@@ -42,11 +40,13 @@ jobs:
           echo "Current branch: $CURRENT_BRANCH"
           echo "Target branch: $TARGET_BRANCH"
 
+      # 3️⃣ Criar Pull Request via ação do Peter Evans
       - name: Create Pull Request
+        if: env.TARGET_BRANCH != ''
         uses: peter-evans/create-pull-request@v5
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: "Prepare PR from ${{ env.CURRENT_BRANCH }} to ${{ env.TARGET_BRANCH }}"
+          token: ${{ secrets.PAT_TOKEN }}
+          commit-message: "Auto PR from ${{ env.CURRENT_BRANCH }} to ${{ env.TARGET_BRANCH }} [skip ci]"
           branch: ${{ env.CURRENT_BRANCH }}
           base: ${{ env.TARGET_BRANCH }}
           title: "Pull Request: ${{ env.CURRENT_BRANCH }} → ${{ env.TARGET_BRANCH }}"
