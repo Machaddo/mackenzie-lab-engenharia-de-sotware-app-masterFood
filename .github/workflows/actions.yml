@@ -12,14 +12,14 @@ jobs:
   create-pull-request:
     runs-on: ubuntu-latest
     steps:
-      # 1️⃣ Checkout do repositório com PAT
+      # 1️⃣ Checkout usando PAT
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           token: ${{ secrets.PAT_TOKEN }}
-          fetch-depth: 0  # necessário para histórico completo
+          fetch-depth: 0
 
-      # 2️⃣ Determinar branch alvo para o PR
+      # 2️⃣ Determinar branch alvo
       - name: Determine target branch
         id: target
         run: |
@@ -37,16 +37,13 @@ jobs:
           fi
 
           echo "TARGET_BRANCH=$TARGET_BRANCH" >> $GITHUB_ENV
-          echo "Current branch: $CURRENT_BRANCH"
-          echo "Target branch: $TARGET_BRANCH"
 
-      # 3️⃣ Criar Pull Request via ação do Peter Evans
+      # 3️⃣ Criar Pull Request usando o mesmo PAT
       - name: Create Pull Request
         if: env.TARGET_BRANCH != ''
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.PAT_TOKEN }}
-          commit-message: "Auto PR from ${{ env.CURRENT_BRANCH }} to ${{ env.TARGET_BRANCH }} [skip ci]"
           branch: ${{ env.CURRENT_BRANCH }}
           base: ${{ env.TARGET_BRANCH }}
           title: "Pull Request: ${{ env.CURRENT_BRANCH }} → ${{ env.TARGET_BRANCH }}"
