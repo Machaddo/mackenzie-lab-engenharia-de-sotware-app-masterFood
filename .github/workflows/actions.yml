@@ -43,7 +43,6 @@ jobs:
           echo "Target branch: $TARGET_BRANCH"
 
       - name: Create Pull Request
-        if: env.TARGET_BRANCH != ''
         uses: peter-evans/create-pull-request@v5
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
