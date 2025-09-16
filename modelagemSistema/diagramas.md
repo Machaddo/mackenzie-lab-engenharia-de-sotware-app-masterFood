@@ -6,7 +6,7 @@ Este repositório contém os principais diagramas de modelagem do sistema **Mast
 
 O diagrama de caso de uso apresenta as **interações do usuário com o sistema**, mostrando as funcionalidades principais que o usuário pode realizar, como gerenciar ingredientes, buscar receitas e receber sugestões inteligentes.
 
-![Diagrama de Caso de Uso](https://github.com/user-attachments/assets/2c6b4d28-d7f9-4f47-8346-dcd28afc1fe4)
+![Diagrama de Caso de Uso](https://github.com/user-attachments/assets/369664b5-d6df-49cb-9edf-da0320d79f83)
 
 **Principais atores:**
 - Usuário
@@ -22,7 +22,8 @@ O diagrama de classes de domínio mostra a **estrutura de dados do sistema**, in
 
 O diagrama de sequência ilustra a **ordem de interações entre objetos** do sistema para realizar um caso de uso específico, como a **geração de sugestões de receita** baseada nos ingredientes cadastrados pelo usuário.
 
-![Diagrama de Sequência](https://github.com/user-attachments/assets/coloque-o-link-aqui)
+
+![Diagrama de Sequência](https://github.com/user-attachments/assets/8684b569-c471-4f3b-98d2-9589db772328)
 
 ## 💡 Observações
 
