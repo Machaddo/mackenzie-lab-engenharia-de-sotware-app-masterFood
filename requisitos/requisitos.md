@@ -6,8 +6,8 @@ Este documento descreve os **requisitos funcionais e não-funcionais** do sistem
 
 O sistema deve permitir que o usuário:
 
-1. **Informar ingredientes através de imagem**  
-   - Capturar ou enviar uma foto dos ingredientes disponíveis para identificação automática.
+1. **Informar ingredientes através de texto**  
+   - Usuario deve possuir um campo de texto para mencionar que receita deseja buscar. Podendo informar os itens que possui e aquilo que deseja como resultado final
 
 2. **Receber sugestões de receitas**  
    - Sugestões baseadas nos ingredientes informados pelo usuário.  
@@ -15,9 +15,6 @@ O sistema deve permitir que o usuário:
 
 3. **Selecionar tipo de culinária**  
    - Filtrar receitas por culinária desejada (ex.: italiana, japonesa, brasileira, mexicana etc.).
-
-4. **Filtrar por conteúdo calórico**  
-   - Permitir escolher receitas com base em preferências calóricas, como baixo ou alto teor calórico.
 
 5. **Cadastrar ingredientes a evitar**  
    - Evitar que receitas contendo determinados ingredientes sejam sugeridas, respeitando restrições alimentares do usuário.
@@ -29,7 +26,7 @@ O sistema deve permitir que o usuário:
 O sistema deve atender aos seguintes critérios de desempenho e qualidade:
 
 1. **Precisão na identificação de ingredientes**  
-   - Reconhecer automaticamente os ingredientes a partir de fotos com eficácia mínima de **80%**.
+   - Reconhecer automaticamente os ingredientes a partir de texto com eficácia mínima de **80%**.
 
 2. **Tempo de resposta das sugestões**  
    - Fornecer receitas compatíveis em até **5 segundos** após a identificação dos ingredientes.
