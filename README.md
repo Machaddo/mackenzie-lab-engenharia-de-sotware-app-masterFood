@@ -16,4 +16,3 @@ O projeto visa auxiliar as pessoas no dia a dia, sendo um aliado nas horas de re
 ## 📝 Visão Geral  
 O **Master Chef Digital** elimina a necessidade de consultar diversas fontes online ou guardar cadernetas com receitas.  
 Seu objetivo central é colocar um **chef inteligente na palma da mão**, oferecendo as melhores opções de pratos de acordo com os itens disponíveis e preferências pessoais.  
-
