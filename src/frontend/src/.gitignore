@@ -1,0 +1,10 @@
+# pasta node_modules que contém as dependências do node
+/node_modules
+
+/.angular
+
+# Arquivos de configuração/IDE locais
+.vscode/
+
+npm-debug.log
+yarn-error.log

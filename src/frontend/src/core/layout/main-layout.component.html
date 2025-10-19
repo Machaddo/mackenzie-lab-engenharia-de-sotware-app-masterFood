@@ -1,0 +1,38 @@
+<div class="layout-container">
+  <header class="topbar">
+    <div class="logo"><i class="bi bi-whisk me-2"></i> MasterFood</div>
+
+    <div class="avatar" (click)="irParaPerfil()">
+      <ng-container *ngIf="loggedUser; else guestAvatar">
+        <div class="avatar-initial">
+          {{ loggedUser.name.charAt(0).toUpperCase() }}
+        </div>
+      </ng-container>
+
+      <ng-template #guestAvatar>
+        <i class="bi bi-house fs-4"></i>
+      </ng-template>
+    </div>
+  </header>
+
+  <main>
+    <router-outlet></router-outlet>
+  </main>
+
+  <footer class="bottom-nav">
+    <div class="nav-inner">
+      <a routerLink="/home" routerLinkActive="active" class="nav-item" (click)="irParaHome()">
+        <i class="bi bi-house fs-4"></i>
+        <div>Home</div>
+      </a>
+      <a routerLinkActive="active" class="nav-item" (click)="irParaReceitas()">
+        <i class="bi bi-heart fs-4"></i>
+        <div>Receitas</div>
+      </a>
+      <a routerLinkActive="active" class="nav-item" (click)="irParaPerfil()">
+        <i class="bi bi-person fs-4"></i>
+        <div>Perfil</div>
+      </a>
+    </div>
+  </footer>
+</div>

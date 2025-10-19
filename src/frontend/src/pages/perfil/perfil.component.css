@@ -1,0 +1,119 @@
+/* ========================================= */
+/* 1. SEÇÃO DE INFORMAÇÕES DO USUÁRIO (AVATAR) */
+/* ========================================= */
+
+.user-info-section {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem 0; /* Aumenta o padding para respiro */
+  }
+  
+  .profile-avatar {
+    margin-right: 2rem; /* Aumenta o espaçamento */
+  
+    .circular-avatar-wrapper {
+      width: 120px; /* Aumenta um pouco o avatar */
+      height: 120px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #777777 0%, #808080 100%); /* Fundo degradê no lugar do amarelo puro */
+      padding: 5px; /* Aumenta a borda */
+      box-shadow: 0 0 0 4px rgba(25, 30, 53, 0.5); /* Sombra suave externa */
+      transition: transform 0.3s ease;
+      
+      &:hover {
+        transform: scale(1.05); /* Efeito sutil de destaque no hover */
+      }
+  
+      .profile-pic {
+        border: 3px solid #fff; /* Borda interna branca definida */
+      }
+    }
+  }
+  
+  .user-details {
+    h2 {
+      font-size: 1.8rem; /* Nome um pouco maior */
+      font-weight: 700;
+      color: #212529; /* Cor mais escura para contraste */
+      margin-bottom: 0.25rem;
+    }
+    .edit-photo {
+      font-size: 0.95rem;
+      color: #007bff;
+      cursor: pointer;
+      text-decoration: none; /* Remove sublinhado para um visual mais limpo */
+      font-weight: 500;
+    }
+  }
+  
+  /* ========================================= */
+  /* 2. MELHORIA NOS CARDS (Design Limpo e Moderno) */
+  /* ========================================= */
+  
+  .card {
+    border: 1px solid #e9ecef; /* Adiciona uma borda sutil para definição */
+    border-radius: 16px; /* Bordas mais arredondadas e modernas */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08); /* Sombra mais destacada e suave */
+    transition: all 0.3s ease;
+    background-color: #ffffff; /* Fundo branco garantido */
+    
+    &:hover {
+      transform: translateY(-5px); /* Efeito de elevação mais perceptível */
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    .card-title {
+      font-size: 1.1rem; /* Título ligeiramente maior */
+      color: #343a40;
+      margin-bottom: 1rem !important;
+    }
+  
+    /* Conteúdo com ícones e textos aprimorados */
+    .card-content {
+      /* ... (Mantém o flexbox) */
+      .icon-text {
+        color: #6c757d; /* Cor mais neutra para os ícones/textos secundários */
+        .bi { 
+          font-size: 1.1rem; 
+          color: #ffc000; /* Cor de destaque (Amarelo) para os ícones principais */
+        }
+      }
+      .chevron {
+        color: #adb5bd;
+      }
+    }
+    
+    .text-details {
+      font-size: 0.9rem; /* Texto de detalhe um pouco maior */
+    }
+  }
+  
+  /* CARD ESPECIAL: Receitas Favoritas */
+  .receita-card {
+    background: linear-gradient(180deg, #f8f9fa 0%, #ffffff 100%); /* Degradê leve no fundo */
+    .bi-heart-fill {
+      color: #dc3545; /* Vermelho padrão do Bootstrap */
+      transition: transform 0.3s ease;
+      &:hover {
+        transform: scale(1.2);
+      }
+    }
+  }
+  
+  
+  /* ========================================= */
+  /* 3. BOTÃO DE AÇÃO FLUTUANTE */
+  /* ========================================= */
+  
+  .fixed-bottom-action {
+    /* ... (Mantém as posições e o layout) */
+    .btn-danger {
+      background-color: #dc3545; /* Vermelho padrão */
+      border-color: #dc3545;
+      transition: background-color 0.3s ease;
+      
+      &:hover {
+        background-color: #c82333; /* Escurece no hover */
+      }
+    }
+  }

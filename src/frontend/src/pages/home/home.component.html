@@ -1,0 +1,64 @@
+<div class="app-wood">
+  <div class="search-outer">
+    <div class="search-box">
+      <input
+        [(ngModel)]="searchText"
+        (keydown.enter)="search()"
+        placeholder="O que iremos cozinhar hoje?"
+        aria-label="Buscar"
+      />
+      <div class="search-icon" role="button" (click)="search()">
+        <i class="bi bi-search"></i>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal simples (condicional) -->
+  <div
+    class="modal-backdrop fade show"
+    *ngIf="activeCard"
+    style="
+      position: fixed;
+      left: 0;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 1050;
+      background: rgba(0, 0, 0, 0.45);
+    "
+  ></div>
+  <div
+    *ngIf="activeCard"
+    style="
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1060;
+      width: 92%;
+      max-width: 720px;
+    "
+  >
+    <div class="card">
+      <img [src]="activeCard.img" class="card-img-top" alt="" />
+      <div class="card-body">
+        <h5 class="card-title">{{ activeCard.title }}</h5>
+        <p class="card-text">{{ activeCard.description }}</p>
+        <div class="d-flex gap-2">
+          <button class="btn btn-primary" (click)="addToShopping(activeCard)">
+            Adicionar à Lista
+          </button>
+          <button
+            class="btn btn-outline-secondary"
+            (click)="toggleSave(activeCard)"
+          >
+            {{ activeCard.saved ? "Salvo" : "Salvar" }}
+          </button>
+          <button class="btn btn-light ms-auto" (click)="closeCard()">
+            Fechar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

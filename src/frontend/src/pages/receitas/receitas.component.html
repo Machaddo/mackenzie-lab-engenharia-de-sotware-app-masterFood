@@ -1,0 +1,46 @@
+<div class="app-wood">
+  <div class="search-outer">
+    <div class="search-box">
+      <i class="bi bi-search search-icon"></i>
+      <input
+        [(ngModel)]="searchText"
+        (keydown.enter)="buscar()"
+        placeholder="Buscar em suas receitas salvas..."
+        aria-label="Buscar receitas"
+      />
+    </div>
+  </div>
+
+  <div class="filters">
+    <button class="btn-filter" (click)="filtrarCategoria()">
+      Filtrar por Categoria
+    </button>
+    <button class="btn-filter" (click)="ordenarPorData()">
+      Ordenar por Data
+    </button>
+  </div>
+
+  <div class="section-title">Ordenar por Data</div>
+
+  <div class="cards-grid">
+    <div class="card-item" *ngFor="let r of receitas">
+      <img [src]="r.imagem" alt="{{ r.titulo }}" />
+      <div class="card-body">
+        <div class="card-title">
+          {{ r.titulo }}
+          <i
+            class="bi"
+            [ngClass]="r.favorito ? 'bi-heart-fill text-danger' : 'bi-heart'"
+            (click)="toggleFavorito(r)"
+          ></i>
+        </div>
+        <div class="card-info">
+          <div><i class="bi bi-clock"></i> Tempo {{ r.tempo }}</div>
+          <div>
+            <i class="bi bi-bar-chart"></i> Dificuldade {{ r.dificuldade }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
