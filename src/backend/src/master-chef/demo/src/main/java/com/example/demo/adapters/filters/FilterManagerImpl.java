@@ -18,10 +18,10 @@ import com.squareup.okhttp.Response;
 @Service
 public class FilterManagerImpl implements FilterManager {
 
-    @Value("API.TOKEN")
+    @Value("${API.TOKEN}")
     private String TOKEN;
 
-    @Value("API.URL")
+    @Value("${API.URL}")
     private String URL;
 
     private List<Filter> filters;

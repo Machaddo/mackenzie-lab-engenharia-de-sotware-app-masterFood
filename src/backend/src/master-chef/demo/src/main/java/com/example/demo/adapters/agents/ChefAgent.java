@@ -20,11 +20,11 @@ import com.squareup.okhttp.Response;
 @Service
 public class ChefAgent implements Agent {
 
-    @Value("API.TOKEN")
-    private final String TOKEN;
+    @Value("${API.TOKEN}")
+    private String TOKEN;
 
-    @Value("API.URL")
-    private final String URL;
+    @Value("${API.URL}")
+    private String URL;
 
     private final OkHttpClient client;
 
