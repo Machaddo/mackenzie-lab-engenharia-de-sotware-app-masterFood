@@ -8,17 +8,18 @@ services:
       POSTGRES_PASSWORD: password
     volumes:
       # Mantém os dados persistentes mesmo se o container for removido
-      - postgres_data:/var/lib/postgresql/data/
+      - postgress_data:/var/lib/postgresql/data/
     ports:
       - "5432:5432"
     healthcheck:
       # Comando para verificar se o PostgreSQL está aceitando conexões
-      test: ["CMD-SHELL", "pg_isready -U user"] 
-      interval: 5s 
-      timeout: 5s 
+      test: [ "CMD-SHELL", "pg_isready -U user" ]
+      interval: 5s
+      timeout: 5s
       retries: 5 # Tenta 5 vezes antes de falhar
       start_period: 10s # Espera 10s antes de começar a verificar
-
+    networks:
+      - master-chef-network #
 
   app:
     build: ./backend/src/master-chef/demo/
@@ -35,17 +36,24 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - master-chef-network #
 
   web:
     build: ./frontend/src/
     container_name: master-chef-frontend
     ports:
-      - "4200:4200" 
+      - "4200:4200"
     environment:
       REACT_APP_API_URL: http://app:8080
     depends_on:
       - app
+    networks:
+      - master-chef-network
 
-# Definições de Volumes para persistência do banco de dados
 volumes:
-  postgres_data:
+  postgress_data:
+
+networks:
+  master-chef-network:
+    external: true
