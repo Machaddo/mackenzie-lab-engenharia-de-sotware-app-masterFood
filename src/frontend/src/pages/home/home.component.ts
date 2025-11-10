@@ -1,16 +1,10 @@
 import { Component } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
-
-interface Card {
-  id: number;
-  title: string;
-  subtitle?: string;
-  img: string;
-  badge?: string;
-  description?: string;
-  saved?: boolean;
-}
+import { RecipeResponse, RecipeResult } from "core/models/receitas.models";
+import { ReceitasService } from "core/services/receitas/receitas.service";
+import { finalize } from "rxjs";
+import { AuthService } from "core/services/auth/auth.service";
 
 @Component({
   selector: "app-home",
@@ -20,69 +14,109 @@ interface Card {
   styleUrls: ["./home.component.css"],
 })
 export class HomeComponent {
-  title = "MasterFood";
-  searchText = "";
+  searchText: string;
+  receitaEncontrada: (RecipeResult & { saved?: boolean }) | null = null;
+  isToastVisible: boolean = false;
+  toastMessage: string;
+  toastIconClass: string;
+  isLoading: boolean = false;
 
-  cards: Card[] = [
-    {
-      id: 1,
-      title: "Receita do Dia",
-      subtitle: "Spaghetti Carbonara",
-      img: "https://images.unsplash.com/photo-1604908177522-8f0a8b1b3f9a?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=1",
-      badge: "NOVO!",
-      description:
-        "Uma receita clássica italiana com ovos, queijo e bacon crocante.",
-    },
-    {
-      id: 2,
-      title: "Explorar Categorias",
-      subtitle: "Massas, Saladas, Snacks",
-      img: "https://images.unsplash.com/photo-1543353071-087092ec393a?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=2",
-      description: "Encontre receitas por categoria.",
-    },
-    {
-      id: 3,
-      title: "Tendências Culinárias",
-      subtitle: "Pão com Abacate",
-      img: "https://images.unsplash.com/photo-1550507995-3b0e9f65b8c3?q=80&w=800&auto=format&fit=crop&ixlib=rb-4.0.3&s=3",
-      description: "Dicas rápidas e tendências do momento.",
-    },
-  ];
+  constructor(
+    private receitasService: ReceitasService,
+    private authService: AuthService
+  ) {}
 
-  activeCard: Card | null = null;
-  shoppingList: string[] = [];
+  buscarReceita() {
+    console.log("teste");
+    const q = this.searchText.trim();
 
-  search() {
-    // lógica simples: filtrar cards por título/subtitle
-    const q = this.searchText.trim().toLowerCase();
+    this.receitaEncontrada = null;
+
     if (!q) {
       alert("Digite algo para buscar.");
       return;
     }
-    const results = this.cards.filter((c) =>
-      (c.title + " " + (c.subtitle || "")).toLowerCase().includes(q)
-    );
-    if (results.length === 0) {
-      alert("Nenhuma receita encontrada para: " + this.searchText);
+
+    this.isLoading = true;
+
+    this.receitasService
+      .gerarReceita(q)
+      .pipe(finalize(() => (this.isLoading = false)))
+      .subscribe({
+        next: (response: RecipeResponse) => {
+          if (response.content && response.content.length > 0) {
+            this.receitaEncontrada = {
+              ...response.content[0],
+              saved: false,
+            };
+          } else {
+            alert(`Nenhuma receita encontrada para: ${q}`);
+          }
+        },
+        error: (err) => {
+          console.error("Erro ao buscar receita:", err);
+          alert("Erro ao buscar receita. Tente novamente mais tarde.");
+        },
+      });
+  }
+
+  salvarReceita() {
+    const userId = this.authService.getUserId();
+
+    if (!userId) {
+      this.showToast(
+        "Faça o login para salvar uma receita.",
+        "bi bi-lock-fill text-danger me-2"
+      );
+      return;
+    } 
+
+    if (!this.receitaEncontrada) return;
+
+    const isSaving = !this.receitaEncontrada.saved;
+
+    if (isSaving) {
+      this.receitasService.salvarReceita(this.receitaEncontrada).subscribe({
+        next: () => {
+          this.receitaEncontrada!.saved = true;
+          this.showToast(
+            `Receita '${this.receitaEncontrada!.name}' salva!`,
+            "bi-heart-fill text-danger"
+          );
+        },
+        error: (err) => {
+          console.error("Erro ao salvar receita:", err);
+          this.showToast(
+            "Erro ao salvar receita. Tente novamente.",
+            "bi-x-octagon-fill text-danger"
+          );
+        },
+      });
     } else {
-      this.activeCard = results[0];
+      this.receitaEncontrada.saved = false;
+      this.showToast(
+        `Receita '${this.receitaEncontrada.name}' removida dos favoritos.`,
+        "bi-heart-broken text-muted"
+      );
     }
   }
 
-  openCard(card: Card) {
-    this.activeCard = card;
+  private showToast(message: string, iconClass: string) {
+    this.toastMessage = message;
+    this.toastIconClass = iconClass;
+    this.isToastVisible = true;
+
+    setTimeout(() => {
+      this.isToastVisible = false;
+    }, 3000);
   }
 
-  closeCard() {
-    this.activeCard = null;
-  }
-
-  toggleSave(card: Card) {
-    card.saved = !card.saved;
-  }
-
-  addToShopping(card: Card) {
-    this.shoppingList.push(card.title);
-    alert(card.title + " adicionado à sua lista de compras.");
+  formatAmount(amount: number, unit: string): string {
+    if (amount === 0.0 && unit === "") {
+      // Caso de "a gosto"
+      return "";
+    }
+    // Garante que haja um espaço antes da unidade se ela não estiver vazia
+    return `${amount}${unit.trim() ? " " + unit.trim() : ""}`;
   }
 }

@@ -1,182 +1,102 @@
-<div class="container-fluid perfil-main-area">
-  <section class="user-info-section mb-5">
-    <div class="profile-avatar">
-      <div class="circular-avatar-wrapper">
-        <img
-        />
-      </div>
-    </div>
-
-    <div class="user-details">
-      <h2>{{ usuario.nome }}</h2>
-      <p class="edit-photo" (click)="editarFoto()">Editar Foto</p>
-    </div>
-  </section>
-
-  <div class="row g-3 card-grid">
-    <div class="col-6 col-md-4">
-      <div class="card p-3 h-100" (click)="openEditModal('conta')">
-        <h6
-          class="card-title fw-bold mb-3 d-flex justify-content-between align-items-center"
-        >
-          Minha Conta
-          <i class="bi bi-pencil-square text-primary cursor-pointer fs-6"></i>
-        </h6>
-        <div class="text-details">
-          <p class="mb-1">
-            <i class="bi bi-envelope me-2"></i> Email: **{{ usuario.email }}**
-          </p>
-          <p class="mb-3">
-            <i class="bi bi-phone me-2"></i> Número de Telefone: **{{
-              usuario.telefone
-            }}**
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="col-6 col-md-4">
-      <div class="card p-3 h-100" (click)="openEditModal('ingredientes')">
-        <h6
-          class="card-title fw-bold mb-3 d-flex justify-content-between align-items-center"
-        >
-          Ingredientes
-          <i class="bi bi-pencil-square text-primary cursor-pointer fs-6"></i>
-        </h6>
-        <div class="text-details">
-          <p class="mb-1">Cadastre aqui suas restrições alimentares</p>
-          <div class="icon-text">
-            <i class="bi bi-slash-circle"></i> Restrições Ativas ({{
-              restricoesArray.length
-            }})
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div
-  class="modal fade"
-  #editModal
-  tabindex="-1"
-  aria-labelledby="editModalLabel"
-  aria-hidden="true"
-  [class.show]="isModalOpen"
-  [style.display]="isModalOpen ? 'block' : 'none'"
->
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="editModalLabel">
-          Editar
-          {{ modalFormType === "conta" ? "Minha Conta" : "Ingredientes" }}
-        </h5>
-        <button
-          type="button"
-          class="btn-close"
-          (click)="closeModal()"
-          aria-label="Close"
-        ></button>
-      </div>
-
-      <div class="modal-body">
-        <form *ngIf="modalFormType === 'conta'" [formGroup]="accountForm">
-          <div class="mb-3">
-            <label for="nome" class="form-label">Nome</label>
-            <input
-              type="text"
-              id="nome"
-              value="{{ usuario.nome }}"
-              formControlName="nome"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input
-              type="email"
-              id="email"
-              value="{{ usuario.email }}"
-              formControlName="email"
-              class="form-control"
-            />
-          </div>
-          <div class="mb-3">
-            <label for="telefone" class="form-label">Telefone</label>
-            <input
-              type="text"
-              id="telefone"
-              value="{{ usuario.telefone }}"
-              formControlName="telefone"
-              class="form-control"
-            />
-          </div>
-        </form>
-
-        <form
-          *ngIf="modalFormType === 'ingredientes'"
-          [formGroup]="restrictionForm"
-        >
-          <label class="form-label d-block mb-3"
-            >Restrições Alimentares / Ingredientes</label
-          >
-
-          <div formArrayName="items" class="mb-3">
-            <div
-              *ngFor="let item of restricoesArray.controls; let i = index"
-              [formGroupName]="i"
-              class="input-group mb-2"
-            >
-              <input
-                type="text"
-                formControlName="nome"
-                class="form-control"
-                placeholder="Ex: Glúten, Leite"
-              />
-              <button
-                type="button"
-                class="btn btn-outline-danger"
-                (click)="removeRestriction(i)"
-              >
-                <i class="bi bi-trash"></i>
-              </button>
+<ng-container *ngIf="currentUser$ | async as user; else defaultAvatar">
+  <div class="container-fluid perfil-main-area">
+    <!-- Seção do Usuário + Botão de Logout alinhado -->
+    <div
+      class="user-header d-flex justify-content-between align-items-center mb-4"
+    >
+      <!-- Info do usuário -->
+      <section class="user-info-section d-flex align-items-center gap-4 m-0">
+        <div class="profile-avatar position-relative">
+          <div class="circular-avatar-wrapper">
+            <div class="avatar-initial-text">
+              {{ user.name.charAt(0).toUpperCase() }}
             </div>
           </div>
+        </div>
 
-          <button
-            type="button"
-            class="btn btn-outline-success w-100"
-            (click)="addRestriction()"
+        <div class="user-details">
+          <h2 class="fw-bold mb-1">Olá, {{ user.name | titlecase }} 👋</h2>
+          <span class="badge bg-primary">
+            Receitas Criadas: {{ user.recipes?.length || 0 }}
+          </span>
+        </div>
+      </section>
+
+      <!-- Botão Logout -->
+      <button
+        class="btn btn-outline-danger btn-sm logout-btn d-flex align-items-center gap-2"
+        (click)="logout()"
+      >
+        <i class="bi bi-box-arrow-right"></i>
+        Sair
+      </button>
+    </div>
+
+    <!-- Cards -->
+    <div class="row g-3 card-grid">
+      <!-- Minha Conta -->
+      <div class="col-6 col-md-4">
+        <div class="card p-3 h-100" (click)="openEditModal('conta')">
+          <h6
+            class="card-title fw-bold d-flex justify-content-between align-items-center"
           >
-            <i class="bi bi-plus-circle me-2"></i> Adicionar Nova Restrição
-          </button>
-        </form>
+            Minha Conta
+            <i class="bi bi-eye text-secondary cursor-pointer fs-6"></i>
+          </h6>
+          <p class="mb-1"><i class="bi bi-person me-2"></i>{{ user.name }}</p>
+          <p class="mb-0">
+            <i class="bi bi-envelope me-2"></i>{{ user.login }}
+          </p>
+        </div>
       </div>
 
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" (click)="closeModal()">
-          Cancelar
-        </button>
-        <button
-          type="button"
-          class="btn btn-primary"
-          (click)="saveChanges(modalFormType!)"
-          [disabled]="
-            modalFormType === 'conta'
-              ? accountForm.invalid
-              : restrictionForm.invalid
-          "
+      <!-- Ingredientes -->
+      <!-- <div class="col-6 col-md-4">
+        <div class="card p-3 h-100" (click)="openEditModal('ingredientes')">
+          <h6 class="card-title fw-bold d-flex justify-content-between align-items-center">
+            Ingredientes
+            <i class="bi bi-pencil-square text-primary fs-6"></i>
+          </h6>
+          <p class="mb-0">Gerencie suas restrições alimentares</p>
+        </div>
+      </div> -->
+
+      <!-- Minhas Receitas -->
+      <div class="col-6 col-md-4" *ngIf="user.recipes">
+        <div class="card p-3 h-100" (click)="goToRecipes()">
+          <h6
+            class="card-title fw-bold d-flex justify-content-between align-items-center"
+          >
+            Minhas Receitas
+            <i class="bi bi-book text-success fs-5"></i>
+          </h6>
+          <p class="mb-0">
+            Você possui {{ user.recipes.length }} receitas cadastradas
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Últimas Receitas -->
+    <div *ngIf="user.recipes?.length" class="mt-4">
+      <h5 class="fw-bold mb-3">Últimas Receitas</h5>
+
+      <div class="last-recipes-list">
+        <div
+          class="recipe-item"
+          *ngFor="let r of user.recipes | slice : 0 : 3"
+          (click)="goToRecipe(r)"
         >
-          Salvar Alterações
-        </button>
+          <i class="bi bi-journal-text me-2"></i>
+          <span>{{ r.name }}</span>
+        </div>
       </div>
     </div>
   </div>
-</div>
+</ng-container>
 
-<div
-  class="modal-backdrop fade"
-  [class.show]="isModalOpen"
-  [style.display]="isModalOpen ? 'block' : 'none'"
-></div>
+<ng-template #defaultAvatar>
+  <div class="container-fluid perfil-main-area">
+    Ocorreu um erro. Tente novamente em alguns minutos...
+  </div>
+</ng-template>

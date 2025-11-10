@@ -1,0 +1,39 @@
+.login-container {
+    /* Redefinindo a largura máxima */
+    max-width: 350px; 
+    width: 100%;
+}
+
+/* ---------------- ESTILO DO BOTÃO (Cor da Marca) ---------------- */
+.login-button {
+    background-color: var(--masterfood-dark) !important; /* Usando a cor escura do header */
+    border-radius: 20px; /* Mantém o arredondamento personalizado */
+    border-color: var(--masterfood-dark) !important;
+    font-weight: bold;
+}
+
+.login-button:hover:not([disabled]) {
+    background-color: #4a637c !important; /* Um tom um pouco mais claro do escuro */
+    border-color: #4a637c !important;
+}
+
+.login-button[disabled] {
+    background-color: #adb5bd !important;
+    border-color: #adb5bd !important;
+}
+
+/* ---------------- AJUSTES FINOS ---------------- */
+/* Aplicando o arredondamento do seu layout aos inputs */
+.form-control {
+    border-radius: 20px;
+}
+
+.server-error {
+    /* Removido o estilo de fundo Bootstrap e apenas ajustando o border-radius */
+    border-radius: 4px;
+}
+
+.forgot-password a {
+    color: var(--masterfood-dark) !important;
+    text-decoration: none;
+}

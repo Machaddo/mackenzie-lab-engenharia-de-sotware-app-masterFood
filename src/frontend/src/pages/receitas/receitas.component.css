@@ -1,156 +1,68 @@
-.topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #222;
-    color: white;
-    padding: 0.75rem 1rem;
-  }
-  
-  .logo {
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-  }
-  
-  .titulo {
-    font-size: 1.2rem;
-    font-weight: 500;
-  }
-  
-  .avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: #444;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 600;
-  }
-  
-  .avatar-inicial {
-    text-transform: uppercase;
-  }
-  
-  .app-wood {
-    background: url('/assets/wood-texture.jpg');
-    background-size: cover;
-    min-height: calc(100vh - 100px);
-    padding: 1rem;
-  }
-  
-  .search-outer {
-    margin: 1rem 0;
-  }
-  
-  .search-box {
-    background: white;
-    border-radius: 24px;
-    display: flex;
-    align-items: center;
-    padding: 0.5rem 1rem;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-  }
-  
-  .search-box i {
-    margin-right: 0.5rem;
-    color: gray;
-  }
-  
-  .search-box input {
-    border: none;
-    outline: none;
-    flex: 1;
-  }
-  
-  .actions {
-    display: flex;
-    gap: 0.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  .actions button {
-    background: white;
-    border: none;
-    padding: 0.4rem 0.8rem;
-    border-radius: 12px;
-    font-weight: 500;
-    cursor: pointer;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.15);
-  }
-  
-  .section-title {
-    font-weight: 600;
-    margin-bottom: 0.5rem;
-  }
-  
-  .cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-    gap: 1rem;
-  }
-  
-  .card-item {
-    background: white;
-    border-radius: 12px;
-    overflow: hidden;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
-    position: relative;
-  }
-  
-  .card-item img {
-    width: 100%;
-    height: 140px;
-    object-fit: cover;
-  }
-  
-  .card-item .info {
-    padding: 0.5rem;
-  }
-  
-  .card-item .titulo {
-    font-weight: 600;
-  }
-  
-  .card-item .detalhes {
-    font-size: 0.8rem;
-    color: #555;
-  }
-  
-  .card-item .bi-heart,
-  .card-item .bi-heart-fill {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-  }
-  
-  .bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #222;
-    color: white;
-    padding: 0.3rem 0;
-  }
-  
-  .nav-inner {
-    display: flex;
-    justify-content: space-around;
-  }
-  
-  .nav-item {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 0.8rem;
-    color: #ccc;
-  }
-  
-  .nav-item.active {
-    color: #00b4d8;
-  }
-  
+/* ------------------------------------- */
+/* BOTÕES DE FILTRO */
+/* ------------------------------------- */
+.btn-filter-custom {
+  /* Mantido: Arredondamento e cores customizadas */
+  border-radius: 50px; 
+  border-color: #aaa;
+  color: #555;
+  transition: all 0.2s;
+}
+
+.btn-filter-custom:hover {
+  background-color: var(--masterfood-dark);
+  border-color: var(--masterfood-dark);
+  color: white;
+}
+
+/* ------------------------------------- */
+/* CARDS DE RECEITAS */
+/* ------------------------------------- */
+.recipe-card-custom {
+  /* Mantido: Animação e borda customizada */
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: none;
+}
+
+.recipe-card-custom:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15) !important;
+}
+
+.recipe-card-custom .card-img-top {
+  /* Mantido: Dimensões da imagem e arredondamento superior */
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px 10px 0 0;
+}
+
+.card-title {
+  color: var(--masterfood-dark);
+  font-size: 1.15rem;
+}
+
+/* Icone favorito (Mantido) */
+.bi-heart, .bi-heart-fill {
+  cursor: pointer;
+}
+
+/* Modal mais suave */
+.modal-content {
+  animation: fadeInScale 0.25s ease;
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.92); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.list-group-item {
+  border: none;
+  border-bottom: 1px solid #f1f1f1;
+}
+
+.list-group-item:last-child {
+  border-bottom: none;
+}

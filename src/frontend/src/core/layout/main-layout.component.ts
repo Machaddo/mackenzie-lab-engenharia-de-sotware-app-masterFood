@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { Router } from '@angular/router';
-// import { AuthService, User } from '../services/auth.service';
+import { AuthService } from 'core/services/auth/auth.service';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -12,15 +13,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./main-layout.component.css']
 })
 export class MainLayoutComponent {
-  // loggedUser: User | null = null;
+  userInitial$: Observable<string | null>;
 
-  loggedUser: { name: string } | null = { name: "Vitor" };
-
-  // constructor(private authService: AuthService) {}
-  constructor(private router: Router) {}
-
-  ngOnInit() {
-    this.loggedUser = this.loggedUser;
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {
+    this.userInitial$ = this.authService.currentUser$.pipe(
+      map(user => user ? user.name.charAt(0).toUpperCase() : null)
+    );
   }
 
   irParaHome(){
@@ -34,4 +35,10 @@ export class MainLayoutComponent {
   irParaPerfil(){
     this.router.navigate(['/perfil']); 
   }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
+  
 }

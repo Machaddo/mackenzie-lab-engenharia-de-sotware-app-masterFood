@@ -3,14 +3,14 @@
     <div class="logo"><i class="bi bi-whisk me-2"></i> MasterFood</div>
 
     <div class="avatar" (click)="irParaPerfil()">
-      <ng-container *ngIf="loggedUser; else guestAvatar">
+      <ng-container *ngIf="userInitial$ | async as initial; else guestAvatar">
         <div class="avatar-initial">
-          {{ loggedUser.name.charAt(0).toUpperCase() }}
+          {{ initial }}
         </div>
       </ng-container>
 
       <ng-template #guestAvatar>
-        <i class="bi bi-house fs-4"></i>
+        <i class="bi bi-person fs-4"></i> 
       </ng-template>
     </div>
   </header>

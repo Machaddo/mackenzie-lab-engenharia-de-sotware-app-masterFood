@@ -1,0 +1,36 @@
+.main-content-area {
+    min-height: calc(100vh - 60px); 
+    background-color: var(--masterfood-light-bg);
+}
+
+.cadastro-container {
+    max-width: 350px; 
+    width: 100%;
+}
+
+/* ---------------- ESTILO DO BOTÃO (Cor da Marca) ---------------- */
+.cadastro-button {
+    background-color: var(--masterfood-dark) !important; 
+    border-radius: 20px; 
+    border-color: var(--masterfood-dark) !important;
+    font-weight: bold;
+}
+
+.cadastro-button:hover:not([disabled]) {
+    background-color: #4a637c !important;
+    border-color: #4a637c !important;
+}
+
+.cadastro-button[disabled] {
+    background-color: #adb5bd !important;
+    border-color: #adb5bd !important;
+}
+
+/* ---------------- AJUSTES FINOS ---------------- */
+.form-control {
+    border-radius: 20px;
+}
+
+.server-error {
+    border-radius: 4px;
+}

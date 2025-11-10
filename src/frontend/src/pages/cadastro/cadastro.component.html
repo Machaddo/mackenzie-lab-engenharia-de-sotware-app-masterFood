@@ -1,0 +1,91 @@
+<div class="main-content-area d-flex justify-content-center align-items-start pt-5">
+    <div class="card cadastro-container shadow-lg rounded-3">
+      <div class="card-body p-4">
+        <h2 class="text-center mb-4">Criar Conta</h2>
+        
+        <div *ngIf="registrationSuccess" class="alert alert-success text-center mb-4">
+          Conta criada com sucesso! Redirecionando para o login...
+        </div>
+        
+        <form [formGroup]="cadastroForm" (ngSubmit)="onSubmit()">
+  
+          <div class="mb-3">
+            <input 
+              type="text" 
+              placeholder="Nome Completo" 
+              formControlName="name"
+              class="form-control"
+              [class.is-invalid]="cadastroForm.controls['name'].invalid && cadastroForm.controls['name'].touched"
+            >
+            <div *ngIf="cadastroForm.controls['name'].invalid && cadastroForm.controls['name'].touched" class="invalid-feedback">
+              <span *ngIf="cadastroForm.controls['name'].errors?.['required']">O nome é obrigatório.</span>
+              <span *ngIf="cadastroForm.controls['name'].errors?.['minlength']">Mínimo 3 caracteres.</span>
+            </div>
+          </div>
+  
+          <div class="mb-3">
+            <input 
+              type="text" 
+              placeholder="Nome usuário" 
+              formControlName="username"
+              class="form-control"
+              [class.is-invalid]="cadastroForm.controls['username'].invalid && cadastroForm.controls['username'].touched"
+            >
+            <div *ngIf="cadastroForm.controls['username'].invalid && cadastroForm.controls['username'].touched" class="invalid-feedback">
+              <span *ngIf="cadastroForm.controls['username'].errors?.['required']">O e-mail é obrigatório.</span>
+              <span *ngIf="cadastroForm.controls['username'].errors?.['username']">Formato de e-mail inválido.</span>
+            </div>
+          </div>
+  
+          <div class="mb-3">
+            <input 
+              type="password" 
+              placeholder="Senha" 
+              formControlName="password"
+              class="form-control"
+              [class.is-invalid]="cadastroForm.controls['password'].invalid && cadastroForm.controls['password'].touched"
+            >
+            <div *ngIf="cadastroForm.controls['password'].invalid && cadastroForm.controls['password'].touched" class="invalid-feedback">
+              <span *ngIf="cadastroForm.controls['password'].errors?.['required']">A senha é obrigatória.</span>
+            </div>
+          </div>
+          
+          <div class="mb-3">
+            <input 
+              type="password" 
+              placeholder="Confirme a Senha" 
+              formControlName="confirmPassword"
+              class="form-control"
+              [class.is-invalid]="cadastroForm.controls['confirmPassword'].invalid && cadastroForm.controls['confirmPassword'].touched || cadastroForm.errors?.['mismatch'] && cadastroForm.controls['confirmPassword'].touched"
+            >
+            <div *ngIf="cadastroForm.controls['confirmPassword'].invalid && cadastroForm.controls['confirmPassword'].touched || cadastroForm.errors?.['mismatch'] && cadastroForm.controls['confirmPassword'].touched" class="invalid-feedback">
+              <span *ngIf="cadastroForm.controls['confirmPassword'].errors?.['required']">A confirmação é obrigatória.</span>
+              <span *ngIf="cadastroForm.errors?.['mismatch']">As senhas não coincidem.</span>
+            </div>
+          </div>
+          
+          <div *ngIf="errorMessage" class="alert alert-danger text-center server-error mb-3" role="alert">
+            {{ errorMessage }}
+          </div>
+  
+          <button 
+            type="submit" 
+            [disabled]="cadastroForm.invalid || registrationSuccess" 
+            class="btn cadastro-button w-100 mt-3 mb-4"
+          >
+            Cadastrar
+          </button>
+        </form>
+  
+        <hr class="my-3"> 
+  
+        <div class="text-center">
+          <p class="mb-2">Já possui uma conta?</p>
+          <a routerLink="/login" class="btn btn-outline-dark w-100 create-account-button">
+            Fazer Login
+          </a>
+        </div>
+        
+      </div>
+    </div>
+  </div>

@@ -10,3 +10,25 @@ main {
   overflow-y: auto;
   background-color: #e6cda7;
 }
+
+.avatar {
+  position: relative;
+}
+
+.avatar-initial {
+  width: 42px;
+  height: 42px;
+  background: #6c757d;
+  color: #fff;
+  font-weight: 600;
+  border-radius: 50%;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dropdown-menu {
+  min-width: 180px;
+  border-radius: 10px;
+}

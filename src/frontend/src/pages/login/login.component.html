@@ -1,0 +1,62 @@
+<div class="main-content-area d-flex justify-content-center align-items-start pt-5">
+  <div class="card login-container shadow-lg rounded-3">
+    <div class="card-body p-4">
+      <h2 class="text-center mb-4">Entrar</h2>
+      
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+        <div class="mb-3">
+          <input 
+            type="text" 
+            placeholder="nome usuário" 
+            formControlName="login"
+            class="form-control"
+            [class.is-invalid]="loginForm.controls['login'].invalid && loginForm.controls['login'].touched"
+          >
+          <div 
+            *ngIf="loginForm.controls['login'].invalid && loginForm.controls['login'].touched" 
+            class="invalid-feedback"
+          >
+            <span *ngIf="loginForm.controls['login'].errors?.['required']">O nome de usuário é obrigatório.</span>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <input 
+            type="password" 
+            placeholder="Senha" 
+            formControlName="senha"
+            class="form-control"
+            [class.is-invalid]="loginForm.controls['senha'].invalid && loginForm.controls['senha'].touched"
+          >
+          <div 
+            *ngIf="loginForm.controls['senha'].invalid && loginForm.controls['senha'].touched" 
+            class="invalid-feedback"
+          >
+            <span *ngIf="loginForm.controls['senha'].errors?.['required']">A senha é obrigatória.</span>
+          </div>
+        </div>
+        
+        <div *ngIf="errorMessage" class="alert alert-danger text-center server-error mb-3" role="alert">
+          {{ errorMessage }}
+        </div>
+
+        <button 
+          type="submit" 
+          
+          class="btn login-button w-100 mt-3 mb-4"
+        >
+          Entrar
+        </button>
+      </form>
+
+      <hr class="my-3"> <div class="text-center">
+        <p class="mb-2">Não tem uma conta?</p>
+        <a routerLink="/cadastro" class="btn btn-outline-dark w-100 create-account-button">
+          Criar conta
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</div>
