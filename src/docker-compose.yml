@@ -18,6 +18,8 @@ services:
       timeout: 5s
       retries: 5 # Tenta 5 vezes antes de falhar
       start_period: 10s # Espera 10s antes de começar a verificar
+    networks:
+      - app-master-network
 
   app:
     build: ./backend/src/master-chef/demo/
@@ -34,6 +36,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    networks:
+      - app-master-network
 
   web:
     build: ./frontend/src/
@@ -44,6 +48,12 @@ services:
       REACT_APP_API_URL: http://app:8080
     depends_on:
       - app
+    networks:
+      - app-master-network
 
 volumes:
   vol_postgres_data:
+
+networks:
+  app-master-network: # ✅ A única rede definida
+    external: true
