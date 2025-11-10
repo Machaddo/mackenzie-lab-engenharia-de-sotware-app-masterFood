@@ -56,4 +56,4 @@ volumes:
 
 networks:
   app-master-network: # ✅ A única rede definida
-    external: true
+    external: false
