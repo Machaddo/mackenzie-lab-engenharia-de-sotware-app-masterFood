@@ -10,7 +10,7 @@ import { AuthService } from "../auth/auth.service";
 })
 export class ReceitasService {
   // private readonly apiUrl = "http://localhost:8080/receitas"; 
-  private readonly apiUrl = "http://18.205.192.12:8080/receitas";
+  private readonly apiUrl = "http://98.92.91.252:8080/receitas";
 
   constructor(
     private http: HttpClient, 
