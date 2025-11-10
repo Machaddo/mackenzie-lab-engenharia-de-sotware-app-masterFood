@@ -24,7 +24,6 @@ public class FilterManagerImpl implements FilterManager {
     @Value("API.URL")
     private String URL;
 
-
     private List<Filter> filters;
     private OkHttpClient client;
 
