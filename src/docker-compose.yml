@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:latest
+    container_name: master-chef-db
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      # Mantém os dados persistentes mesmo se o container for removido
+      - postgres_data:/var/lib/postgresql/data/
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+
+  app:
+    build: ./backend/src/master-chef/demo
+    container_name: master-chef-app
+    ports:
+      - "8080:8080"
+    environment:
+      TOKEN: ${TOKEN}
+      URL: ${URL}
+      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
+      SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
+    depends_on:
+      - db
+    networks:
+      - master-chef-network
+
+  apresentation:
+    build: ./frontend/src
+    container_name: master-chef-frontend
+    ports:
+      - "4200:4200" 
+    environment:
+      REACT_APP_API_URL: http://app:8080
+    depends_on:
+      - app
+    networks:
+      - master-chef-network
+
+# Definições de Volumes para persistência do banco de dados
+volumes:
+  postgres_data:
+
+networks:
+  master-chef-network:
+    external: true

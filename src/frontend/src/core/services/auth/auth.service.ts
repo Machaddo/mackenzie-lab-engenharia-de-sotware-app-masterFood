@@ -9,7 +9,8 @@ import { User } from 'core/models/user.models';
 })
 export class AuthService {
   // Configuração
-  private readonly apiUrl = 'http://localhost:8080/auth';
+  // private readonly apiUrl = "http://localhost:8080/auth"; testes
+  private readonly apiUrl = 'http://app:8080/auth';
   private readonly TOKEN_KEY = 'auth_token';
   private readonly USER = 'user';
 
