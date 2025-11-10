@@ -1,17 +1,4 @@
-# FROM eclipse-temurin:17-jdk-alpine
-
-# WORKDIR /app
-
-# COPY target/*.jar app.jar
-
-# EXPOSE 8080
-
-# ENTRYPOINT [ "java", "-jar", "app.jar" ]
-
-# ----------------------------------------------------------------------
-# STAGE 1: COMPILAÇÃO (BUILDER)
 # Usa uma imagem Maven para compilar o código-fonte e gerar o JAR.
-# ----------------------------------------------------------------------
 FROM maven:3.9.5-eclipse-temurin-17-alpine AS builder
 
 # Define o diretório de trabalho dentro do container
