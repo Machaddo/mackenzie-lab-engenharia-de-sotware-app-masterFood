@@ -17,8 +17,8 @@ import com.squareup.okhttp.Response;
 @Service
 public class FilterManagerImpl implements FilterManager {
 
-    private final String TOKEN = System.getenv("API_TOKEN");
-    private final String URL = System.getenv("URL");
+    private final String TOKEN = "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";
+    private final String URL = "https://models.github.ai/inference/chat/completions ";
 
     private List<Filter> filters;
     private OkHttpClient client;
