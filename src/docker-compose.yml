@@ -27,13 +27,14 @@ services:
       - "8080:8080"
     environment:
       TOKEN: ${TOKEN}
-      URL: ${URL}
+      # URL: ${URL}
       SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
-    # depends_on:
-    #   db:
-    #     condition: service_healthy
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+    depends_on:
+      db:
+        condition: service_healthy
 
   web:
     build: ./frontend/src/
