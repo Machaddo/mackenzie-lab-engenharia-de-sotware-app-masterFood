@@ -31,6 +31,12 @@
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 
+		<!-- Spring Security -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
 		<!-- Suporte à criação de endpoints REST / MVC -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -18,7 +18,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Component
-public class RequestFilter implements Filter{
+public class RequestFilter implements Filter {
 
     @Autowired
     private SessionService sessionService;
@@ -31,7 +31,9 @@ public class RequestFilter implements Filter{
         HttpServletResponse response = (HttpServletResponse) arg1;
 
         String path = request.getRequestURI();
-        if (path.equals("/auth/signin") || path.equals("/auth/signup")) {
+        if (path.equals("/auth/signin")
+                || path.equals("/auth/signup")
+                || (path.equals("/receitas") && request.getMethod().equals("POST"))) { // LIBERADO
             arg2.doFilter(request, response);
             return;
         }
@@ -53,5 +55,4 @@ public class RequestFilter implements Filter{
 
         arg2.doFilter(request, response);
     }
-
 }
