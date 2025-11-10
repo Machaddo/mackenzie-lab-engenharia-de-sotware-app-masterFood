@@ -42,15 +42,15 @@ public class RecipeController {
     @Autowired
     private GetUserRecipesUseCase getUserRecipes;
 
+    @Autowired
+    private FilterManager filterManager;
+
     @PostMapping()
     public ResponseEntity<Map<String, Object>> requestRecipe(@RequestBody String request) {
         Map<String, Object> response = new HashMap<>();
 
         try {
-            FilterManager manager = new FilterManagerImpl(
-                    List.of(new RecipeFilter(request)));
-
-            if (!manager.applyFilters()) {
+            if (!filterManager.applyFilters(List.of(new RecipeFilter(request)))) {
                 response.put("error_message", "Prompt não condiz com o propósito do modelo");
                 return ResponseEntity.badRequest().body(response);
             }

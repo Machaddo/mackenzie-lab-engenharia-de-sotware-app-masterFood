@@ -1,7 +1,10 @@
 package com.example.demo.adapters.filters;
 
 
-public interface FilterManager {
+import org.springframework.stereotype.Service;
 
-    boolean applyFilters() throws Exception;
+import java.util.List;
+
+public interface FilterManager {
+    boolean applyFilters(List<Filter> filters) throws Exception;
 }

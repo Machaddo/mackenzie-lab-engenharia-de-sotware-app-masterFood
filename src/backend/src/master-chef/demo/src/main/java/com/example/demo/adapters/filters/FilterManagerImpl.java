@@ -3,6 +3,7 @@ package com.example.demo.adapters.filters;
 import java.util.List;
 import java.util.Map;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -17,23 +18,20 @@ import com.squareup.okhttp.Response;
 
 @Service
 public class FilterManagerImpl implements FilterManager {
-
-    @Value("${API.TOKEN}")
-    private String TOKEN;
-
-    @Value("${API.URL}")
-    private String URL;
-
-    private List<Filter> filters;
+    private final String TOKEN;
+    private final String URL;
     private OkHttpClient client;
 
-    public FilterManagerImpl(List<Filter> filters) {
-        this.filters = filters;
+    public FilterManagerImpl(@Value("${API.TOKEN}") String token,
+                             @Value("${URL}") String url,
+                             List<Filter> filters) {
+        this.TOKEN = token;
+        this.URL = url;
         this.client = new OkHttpClient();
     }
 
     @Override
-    public boolean applyFilters() throws Exception {
+    public boolean applyFilters(List<Filter> filters) throws Exception {
         for (Filter filter : filters) {
             String requestBody = getRequestBody(filter.getSchema(), filter.getFilter());
             Request request = getRequest(requestBody);
