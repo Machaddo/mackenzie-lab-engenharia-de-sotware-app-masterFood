@@ -13,8 +13,6 @@ services:
       - postgres_data:/var/lib/postgresql/data/
     ports:
       - "5432:5432"
-    networks:
-      - master-chef-network
 
   app:
     build: ./backend/src/master-chef/demo/
@@ -29,8 +27,6 @@ services:
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
     depends_on:
       - db
-    networks:
-      - master-chef-network
 
   apresentation:
     build: ./frontend/src/
@@ -41,13 +37,7 @@ services:
       REACT_APP_API_URL: http://app:8080
     depends_on:
       - app
-    networks:
-      - master-chef-network
 
 # Definições de Volumes para persistência do banco de dados
 volumes:
   postgres_data:
-
-networks:
-  master-chef-network:
-    external: true
