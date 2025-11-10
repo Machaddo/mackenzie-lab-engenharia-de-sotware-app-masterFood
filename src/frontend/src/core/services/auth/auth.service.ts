@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { User } from 'core/models/user.models';
@@ -9,8 +9,8 @@ import { User } from 'core/models/user.models';
 })
 export class AuthService {
   // Configuração
-  // private readonly apiUrl = "http://localhost:8080/auth"; testes
-  private readonly apiUrl = 'http://44.220.148.12:8080/auth';
+  private readonly apiUrl = "http://localhost:8080/auth"; 
+  // private readonly apiUrl = 'http://44.220.148.12:8080/auth';
   private readonly TOKEN_KEY = 'auth_token';
   private readonly USER = 'user';
 
@@ -31,17 +31,23 @@ export class AuthService {
 
   login(credentials: any): Observable<any> {
     console.log(credentials);
-    return this.http.post<any>(`${this.apiUrl}/signin`, credentials).pipe(
+    return this.http.post<any>(`${this.apiUrl}/signin`, credentials, { observe: 'response' })
+    .pipe(
       tap(response => {
-        localStorage.setItem(this.TOKEN_KEY, `loggedIn+${response.user.id}`)
-        localStorage.setItem("userId", response.user.id);
+        const token = response.headers.get('Authorization'); 
 
-        const user: User = response.user;
-        localStorage.setItem(this.USER, JSON.stringify(user));
-        
+        if (token) {
+          const cleanedToken = token.replace('Bearer ', '').trim();
+          localStorage.setItem(this.TOKEN_KEY, cleanedToken);
+        }
+
+        const user = response.body.user;
+        localStorage.setItem("userId", user.id);
+        localStorage.setItem("user", JSON.stringify(user));
+
         this._isLoggedIn$.next(true);
         this._currentUserSubject.next(user);
-        
+
         this.router.navigate(['/home']);
       })
     );
