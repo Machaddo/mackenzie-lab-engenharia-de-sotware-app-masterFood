@@ -5,23 +5,20 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { routes } from 'app.routes'
 import { MainLayoutComponent } from "core/layout/main-layout.component";
-
-// Imports para autenticação
 import { 
   provideHttpClient, 
   withInterceptors 
 } from '@angular/common/http';
 import { 
   authInterceptor 
-} from 'core/services/auth/auth.interceptor' // Importe seu Interceptor
+} from 'core/services/auth/auth.interceptor' 
 
 bootstrapApplication(MainLayoutComponent, {
   providers: [
     provideRouter(routes),
-    // Configuração do HttpClient com o interceptor
     provideHttpClient(
       withInterceptors([
-        authInterceptor // Adiciona o interceptor aqui
+        authInterceptor
       ])
     ),
     importProvidersFrom(CommonModule, FormsModule)
