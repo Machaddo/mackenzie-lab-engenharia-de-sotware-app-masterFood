@@ -44,8 +44,6 @@ services:
       REACT_APP_API_URL: http://app:8080
     depends_on:
       - app
-    networks:
-      - master-chef-network
 
 volumes:
   vol_postgres_data:
