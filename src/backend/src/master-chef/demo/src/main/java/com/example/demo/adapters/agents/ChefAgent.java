@@ -3,6 +3,9 @@ package com.example.demo.adapters.agents;
 import java.util.List;
 import java.util.Map;
 
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Utils.JsonSchema;
@@ -17,12 +20,17 @@ import com.squareup.okhttp.Response;
 @Service
 public class ChefAgent implements Agent {
 
-    private final String TOKEN = "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";
-    private final String URL = "https://models.github.ai/inference/chat/completions ";
+    @Value("API.TOKEN")
+    private final String TOKEN;
 
-    private OkHttpClient client;
+    @Value("API.URL")
+    private final String URL;
 
-    public ChefAgent() {
+    private final OkHttpClient client;
+
+    public ChefAgent(String token, String url) {
+        TOKEN = token;
+        URL = url;
         client = new OkHttpClient();
     }
 

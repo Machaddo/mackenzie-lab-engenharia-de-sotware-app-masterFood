@@ -3,6 +3,7 @@ package com.example.demo.adapters.filters;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.exceptions.InvalidApiResponseException;
@@ -17,8 +18,12 @@ import com.squareup.okhttp.Response;
 @Service
 public class FilterManagerImpl implements FilterManager {
 
-    private final String TOKEN = "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";
-    private final String URL = "https://models.github.ai/inference/chat/completions ";
+    @Value("API.TOKEN")
+    private String TOKEN;
+
+    @Value("API.URL")
+    private String URL;
+
 
     private List<Filter> filters;
     private OkHttpClient client;
