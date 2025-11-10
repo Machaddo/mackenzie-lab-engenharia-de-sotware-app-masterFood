@@ -1,13 +1,12 @@
 services:
   db:
-    image: postgres:latest
+    image: postgres:15-alpine 
     container_name: master-chef-db
     environment:
       POSTGRES_DB: db
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
     volumes:
-      # Mantém os dados persistentes mesmo se o container for removido
       - vol_postgres_data:/var/lib/postgresql/data/
     ports:
       - "5432:5432"
@@ -21,14 +20,13 @@ services:
       - "8080:8080"
     environment:
       TOKEN: ${TOKEN}
-      # URL: ${URL}
-      SPRING_DATASOURCE_URL: ${SPRING_DATASOURCE_URL}
+      URL: ${URL}
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/db
       SPRING_DATASOURCE_USERNAME: ${SPRING_DATASOURCE_USERNAME}
       SPRING_DATASOURCE_PASSWORD: ${SPRING_DATASOURCE_PASSWORD}
       SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
     depends_on:
-      db:
-        condition: service_healthy
+      - db
     networks:
       - app-master-network
 
