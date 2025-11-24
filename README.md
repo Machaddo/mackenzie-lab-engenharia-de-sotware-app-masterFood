@@ -141,3 +141,4 @@ A documentação completa do sistema encontra-se na pasta `/docs` deste reposit�
 * **[Requisitos](./docs/requisitos/requisitos.md):** Lista detalhada de requisitos funcionais e não-funcionais.
 * **[Modelagem](./docs/modelagem/diagramas.md):** Diagramas de Caso de Uso, Classes e Sequência.
 * **[Protótipo (Figma)](./docs/prototipo/link.txt):** Link para o design visual das telas.
+  
